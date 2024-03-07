@@ -5,11 +5,11 @@ class GameState with _$GameState {
   const GameState._();
 
   const factory GameState.idle({
-    List<Stratagem> availableStratagems,
-    Stratagem currentStratagem,
-    List<Stratagem> stratagemQueue,
+    required List<Stratagem> availableStratagems,
+    required Stratagem currentStratagem,
+    required List<Stratagem> stratagemQueue,
     // TODO: rename
-    List<String> currentCombo,
+    required List<String> currentCombo,
   }) = _IdleState;
 
   const factory GameState.wrongKey() = _WrongKeyState;

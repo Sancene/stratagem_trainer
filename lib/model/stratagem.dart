@@ -1,4 +1,5 @@
 import 'package:stratagem_trainer/model/action_key.dart';
+import 'package:stratagem_trainer/model/stratagem_type.dart';
 
 class Stratagem {
   Stratagem({
@@ -10,7 +11,5 @@ class Stratagem {
   final List<ActionKey> code;
   final String name;
   final String previewImage;
-
-  // TODO: enum type: orbital, support weapon etc.
-  final String type;
+  final StratagemType type;
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stratagem_trainer/bloc/game_bloc/game_bloc.dart';
+import 'package:stratagem_trainer/model/action_key.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({required this.title, super.key});
@@ -67,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     _node.requestFocus();
+    final bloc = context.read<GameBloc>();
     return KeyboardListener(
       focusNode: _node,
       autofocus: true,
@@ -74,12 +78,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         if (event is KeyDownEvent) {
           switch (event.physicalKey) {
             case PhysicalKeyboardKey.arrowUp || PhysicalKeyboardKey.keyW:
+              bloc.add(const GameEvent.keyPressed(ActionKey.up));
               await processAnimation(_arrowUpController);
             case PhysicalKeyboardKey.arrowDown || PhysicalKeyboardKey.keyS:
+              bloc.add(const GameEvent.keyPressed(ActionKey.down));
               await processAnimation(_arrowDownController);
             case PhysicalKeyboardKey.arrowRight || PhysicalKeyboardKey.keyD:
+              bloc.add(const GameEvent.keyPressed(ActionKey.right));
               await processAnimation(_arrowRightController);
             case PhysicalKeyboardKey.arrowLeft || PhysicalKeyboardKey.keyA:
+              bloc.add(const GameEvent.keyPressed(ActionKey.left));
               await processAnimation(_arrowLeftController);
           }
         }
@@ -106,6 +114,42 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     SizedBox(width: 12),
                     _MainTab(title: 'Database', isSelected: false),
                   ],
+                ),
+                const Spacer(),
+                BlocBuilder<GameBloc, GameState>(
+                  builder: (context, state) => Center(child: Text(state.stratagemQueue.firstOrNull?.name ?? '')),
+                ),
+                const SizedBox(height: 16),
+                BlocBuilder<GameBloc, GameState>(
+                  builder: (context, state) => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (state.stratagemQueue.isNotEmpty)
+                        for (int i = 0; i < state.stratagemQueue.first.code.length; i++)
+                          switch (state.stratagemQueue.first.code[i]) {
+                            ActionKey.up => Icon(
+                                Icons.arrow_upward,
+                                size: 48,
+                                color: i < state.currentCombo.length ? Colors.yellow : Colors.white,
+                              ),
+                            ActionKey.down => Icon(
+                                Icons.arrow_downward,
+                                size: 48,
+                                color: i < state.currentCombo.length ? Colors.yellow : Colors.white,
+                              ),
+                            ActionKey.right => Icon(
+                                Icons.arrow_forward,
+                                size: 48,
+                                color: i < state.currentCombo.length ? Colors.yellow : Colors.white,
+                              ),
+                            ActionKey.left => Icon(
+                                Icons.arrow_back,
+                                size: 48,
+                                color: i < state.currentCombo.length ? Colors.yellow : Colors.white,
+                              ),
+                          },
+                    ],
+                  ),
                 ),
                 const Spacer(),
                 Row(

@@ -6,19 +6,43 @@ class GameState with _$GameState {
 
   const factory GameState.idle({
     required List<Stratagem> availableStratagems,
-    required Stratagem currentStratagem,
-    required List<Stratagem> stratagemQueue,
+    required Queue<Stratagem> stratagemQueue,
     // TODO: rename
-    required List<String> currentCombo,
+    required List<ActionKey> currentCombo,
   }) = _IdleState;
 
-  const factory GameState.wrongKey() = _WrongKeyState;
+  const factory GameState.wrongKey({
+    required List<Stratagem> availableStratagems,
+    required Queue<Stratagem> stratagemQueue,
+    // TODO: rename
+    required List<ActionKey> currentCombo,
+  }) = _WrongKeyState;
 
-  const factory GameState.completedStratagem() = _CompletedStratagemState;
+  const factory GameState.completedStratagem({
+    required List<Stratagem> availableStratagems,
+    required Queue<Stratagem> stratagemQueue,
+    // TODO: rename
+    required List<ActionKey> currentCombo,
+  }) = _CompletedStratagemState;
 
-  const factory GameState.failedStratagem() = _FailedStratagemState;
+  const factory GameState.failedStratagem({
+    required List<Stratagem> availableStratagems,
+    required Queue<Stratagem> stratagemQueue,
+    // TODO: rename
+    required List<ActionKey> currentCombo,
+  }) = _FailedStratagemState;
 
-  const factory GameState.win() = _WinState;
+  const factory GameState.win({
+    required List<Stratagem> availableStratagems,
+    required Queue<Stratagem> stratagemQueue,
+    // TODO: rename
+    required List<ActionKey> currentCombo,
+  }) = _WinState;
 
-  const factory GameState.failure() = _FailureState;
+  const factory GameState.failure({
+    required List<Stratagem> availableStratagems,
+    required Queue<Stratagem> stratagemQueue,
+    // TODO: rename
+    required List<ActionKey> currentCombo,
+  }) = _FailureState;
 }

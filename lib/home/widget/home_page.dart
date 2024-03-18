@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stratagem_trainer/bloc/game_bloc/game_bloc.dart';
+import 'package:stratagem_trainer/home/bloc/game_bloc/game_bloc.dart';
 import 'package:stratagem_trainer/model/action_key.dart';
 
 class MyHomePage extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stratagem_trainer/bloc/game_bloc/game_bloc.dart';
+import 'package:stratagem_trainer/home/bloc/game_bloc/game_bloc.dart';
 import 'package:stratagem_trainer/home/widget/home_page.dart';
 
 class MyApp extends StatelessWidget {

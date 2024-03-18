@@ -8,7 +8,9 @@ import 'package:stratagem_trainer/model/stratagem_combinations.dart';
 import 'package:stratagem_trainer/model/stratagem_type.dart';
 
 part 'game_bloc.freezed.dart';
+
 part 'game_event.dart';
+
 part 'game_state.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
@@ -42,9 +44,20 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         ) {
     on<_Started>(_onStarted);
     on<_KeyPressed>(_onKeyPressed);
+    on<_TimerExpired>(_onTimerExpired);
   }
 
   void _onStarted(_Started event, Emitter<GameState> emit) {}
+
+  void _onTimerExpired(_TimerExpired event, Emitter<GameState> emit) {
+    emit(
+      GameState.failure(
+        availableStratagems: state.availableStratagems,
+        stratagemQueue: state.stratagemQueue,
+        currentCombo: state.currentCombo,
+      ),
+    );
+  }
 
   void _onKeyPressed(_KeyPressed event, Emitter<GameState> emit) {
     final currentIndex = state.currentCombo.length;

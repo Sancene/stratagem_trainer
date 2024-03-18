@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stratagem_trainer/home/bloc/game_bloc/game_bloc.dart';
+import 'package:stratagem_trainer/home/widget/timer_component.dart';
 import 'package:stratagem_trainer/model/action_key.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -69,28 +70,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     await controller.forward().whenComplete(() => controller.reverse());
   }
 
-  int _timeRemaining = 5;
-
-  late final Timer gameTimer;
-
-  @override
-  void initState() {
-    super.initState();
-    gameTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_timeRemaining == 0) {
-        context.read<GameBloc>().add(const GameEvent.timerExpired());
-        return;
-      }
-      _getTime();
-    });
-  }
-
-  void _getTime() {
-    setState(() {
-      _timeRemaining == 0 ? _timeRemaining = 0 : _timeRemaining--;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     _node.requestFocus();
@@ -123,9 +102,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               context: context,
               builder: (context) => const Text('LOSE'),
             ),
-            completedStratagem: (value) {
-              _timeRemaining += 2;
-            },
           );
         },
         child: Scaffold(
@@ -188,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  Text(_timeRemaining.toString()),
+                  const TimerComponent(),
                   const Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

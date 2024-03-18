@@ -12,14 +12,14 @@ class TimerComponent extends StatefulWidget {
 }
 
 class _TimerComponentState extends State<TimerComponent> {
-  int _timeRemaining = 5;
+  int _timeRemaining = 5000;
 
   late final Timer _gameTimer;
 
   @override
   void initState() {
     super.initState();
-    _gameTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _gameTimer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
       if (_timeRemaining == 0) {
         context.read<GameBloc>().add(const GameEvent.timerExpired());
         return;
@@ -30,7 +30,7 @@ class _TimerComponentState extends State<TimerComponent> {
 
   void _getTime() {
     setState(() {
-      _timeRemaining == 0 ? _timeRemaining = 0 : _timeRemaining--;
+      _timeRemaining == 0 ? _timeRemaining = 0 : _timeRemaining -= 10;
     });
   }
 
@@ -44,9 +44,12 @@ class _TimerComponentState extends State<TimerComponent> {
   Widget build(BuildContext context) {
     return BlocListener<GameBloc, GameState>(
       listener: (context, state) => state.mapOrNull(
-        completedStratagem: (value) => _timeRemaining += 2,
+        completedStratagem: (value) => _timeRemaining += 2000,
+        win: (value) => _gameTimer.cancel(),
       ),
-      child: Text(_timeRemaining.toString()),
+      child: LinearProgressIndicator(
+        value: _timeRemaining / 5000,
+      ),
     );
   }
 }

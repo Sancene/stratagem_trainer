@@ -96,11 +96,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         }
       },
       child: BlocListener<GameBloc, GameState>(
-        listener: (context, state) {
-          state.mapOrNull(
-            failure: (value) => showDialog(
+        listener: (context, state) async {
+          await state.mapOrNull(
+            failure: (value) async => showDialog<void>(
               context: context,
-              builder: (context) => const Text('LOSE'),
+              builder: (context) => const Dialog(child: Center(child: Text('LOSE'))),
+            ),
+            win: (value) async => showDialog<void>(
+              context: context,
+              builder: (context) => const Dialog(child: Center(child: Text('WIN'))),
             ),
           );
         },
@@ -209,6 +213,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 24),
                 ],
               ),
             ),

@@ -109,7 +109,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           );
         },
         child: Scaffold(
-          backgroundColor: Colors.black45,
           body: Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -117,10 +116,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 18),
-                  const Text(
+                  Text(
                     'STRATAGEM TRAINER',
-                    style: TextStyle(
-                        fontFamily: 'Sinclair', fontSize: 36, fontWeight: FontWeight.w700, color: Colors.white),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const Row(
                     children: [
@@ -250,7 +248,7 @@ class _MainTab extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(16, 0, 32, 8),
         child: Text(
           title,
-          style: const TextStyle(fontFamily: 'Sinclair', fontSize: 20, color: Colors.white70),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
     );

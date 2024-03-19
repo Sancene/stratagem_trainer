@@ -39,6 +39,13 @@ class GameState with _$GameState {
     required List<ActionKey> currentCombo,
   }) = _WinState;
 
+  const factory GameState.startingNewGame({
+    required List<Stratagem> availableStratagems,
+    required Queue<Stratagem> stratagemQueue,
+    // TODO: rename
+    required List<ActionKey> currentCombo,
+  }) = _StartingNewGameState;
+
   const factory GameState.failure({
     required List<Stratagem> availableStratagems,
     required Queue<Stratagem> stratagemQueue,

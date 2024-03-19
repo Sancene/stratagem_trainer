@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GameBloc(),
+      create: (context) => GameBloc()..add(const GameEvent.setupNewQueue()),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: appTheme,

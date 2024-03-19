@@ -18,27 +18,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       : super(
           GameState.idle(
             availableStratagems: [],
-            stratagemQueue: Queue<Stratagem>()
-              ..addAll([
-                Stratagem(
-                  code: StratagemCombination.hellbomb.actions,
-                  name: 'aboba1',
-                  previewImage: '',
-                  type: StratagemType.mission,
-                ),
-                Stratagem(
-                  code: StratagemCombination.airbustStrike.actions,
-                  name: 'aboba2',
-                  previewImage: '',
-                  type: StratagemType.offensive,
-                ),
-                Stratagem(
-                  code: StratagemCombination.gasStrike.actions,
-                  name: 'aboba3',
-                  previewImage: '',
-                  type: StratagemType.defensive,
-                ),
-              ]),
+            stratagemQueue: Queue<Stratagem>(),
             currentCombo: [],
           ),
         ) {
@@ -47,7 +27,43 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<_TimerExpired>(_onTimerExpired);
   }
 
-  void _onStarted(_Started event, Emitter<GameState> emit) {}
+  void _onStarted(_Started event, Emitter<GameState> emit) {
+    // TODO: generate random stratagem queue
+    final newQueue = [
+      Stratagem(
+        code: StratagemCombination.hellbomb.actions,
+        name: 'aboba1',
+        previewImage: '',
+        type: StratagemType.mission,
+      ),
+      Stratagem(
+        code: StratagemCombination.airbustStrike.actions,
+        name: 'aboba2',
+        previewImage: '',
+        type: StratagemType.offensive,
+      ),
+      Stratagem(
+        code: StratagemCombination.gasStrike.actions,
+        name: 'aboba3',
+        previewImage: '',
+        type: StratagemType.defensive,
+      ),
+    ];
+    emit(
+      GameState.startingNewGame(
+        availableStratagems: [],
+        stratagemQueue: Queue<Stratagem>()..addAll(newQueue),
+        currentCombo: [],
+      ),
+    );
+    emit(
+      GameState.idle(
+        availableStratagems: state.availableStratagems,
+        stratagemQueue: state.stratagemQueue,
+        currentCombo: state.currentCombo,
+      ),
+    );
+  }
 
   void _onTimerExpired(_TimerExpired event, Emitter<GameState> emit) {
     emit(
@@ -81,6 +97,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
               currentCombo: [],
             ),
           );
+          add(const GameEvent.setupNewQueue());
         } else {
           emit(
             GameState.completedStratagem(
